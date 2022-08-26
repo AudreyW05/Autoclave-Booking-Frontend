@@ -12,9 +12,9 @@ type Props = {
 const AutoclaveWrapper = ({ handleOpenModal }: Props) => {
   return (
     <Grid item className='w-1/2 laptop:block hidden'>
-      <Grid container className='justify-center flex items-end h-screen'>
+      <Grid container className='justify-center flex items-center h-screen'>
         <BookingButton handleOpenModal={handleOpenModal} />
-        <img className='z-0 pb-16' src={AutoclaveImage} />
+        <img className='z-0' src={AutoclaveImage} />
       </Grid>
     </Grid>
   );

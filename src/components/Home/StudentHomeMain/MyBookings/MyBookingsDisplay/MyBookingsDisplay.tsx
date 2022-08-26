@@ -21,7 +21,7 @@ const MyBookingsDisply = (props: Props) => {
 
   return (
     <Container
-      className='rounded-[40px] hover:drop-shadow-2xl z-10 w-[500px] absolute top-52 bg-bgWhite cursor-pointer '
+      className='rounded-[40px] hover:drop-shadow-2xl z-10 w-[500px] absolute bg-bgWhite cursor-pointer'
       style={expand ? { height: '450px' } : { height: '95px' }}
     >
       <Stack>
