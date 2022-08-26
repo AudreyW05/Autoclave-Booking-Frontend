@@ -6,11 +6,15 @@ import { EventClickArg } from '@fullcalendar/react';
 
 import DeleteAlert from '@/components/Home/TeacherHomeMain/Calendar/EventDisplay/DeleteAlert/DeleteAlert';
 
+import { UserData } from '@/modules/user/types';
+
 type Props = {
   eventData: EventClickArg;
+  users: UserData[];
+  handleDeleteBooking: (uuid: string) => void;
 };
 
-const EventDisplay = ({ eventData }: Props) => {
+const EventDisplay = (props: Props) => {
   const [openAlert, setOpenAlert] = useState<boolean>(false);
 
   const handleAlertOpen = () => {
@@ -24,19 +28,24 @@ const EventDisplay = ({ eventData }: Props) => {
   return (
     <>
       <Grid container>
-        <Grid item className='w-11/12'>
-          <Stack direction='row' spacing={3}>
-            <Typography className='font-bold w-52'>{eventData.event.extendedProps.time}</Typography>
-            <Typography>{`booked by: ${eventData.event.extendedProps.userId}`}</Typography>
+        <Grid item className='w-full '>
+          <Stack direction='row'>
+            <Typography className='font-bold w-4/12 '>{props.eventData.event.extendedProps.timeslot}</Typography>
+            <Typography className='w-7/12'>{`Booked By: ${
+              props.users.find(user => user.id === props.eventData.event.extendedProps.userId)?.email
+            }`}</Typography>
+            <Typography className='text-dulwichRed hover:underline w-1/12' onClick={handleAlertOpen}>
+              DELETE
+            </Typography>
           </Stack>
         </Grid>
-        <Grid item>
-          <Typography className='text-dulwichRed hover:underline' onClick={handleAlertOpen}>
-            DELETE
-          </Typography>
-        </Grid>
       </Grid>
-      <DeleteAlert openAlert={openAlert} handleAlertClose={handleAlertClose} />
+      <DeleteAlert
+        openAlert={openAlert}
+        handleAlertClose={handleAlertClose}
+        handleDeleteBooking={props.handleDeleteBooking}
+        bookingDataUuid={props.eventData.event.extendedProps.uuid}
+      />
     </>
   );
 };

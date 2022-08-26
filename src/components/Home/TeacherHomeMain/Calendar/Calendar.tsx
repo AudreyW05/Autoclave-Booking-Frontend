@@ -8,14 +8,17 @@ import { Box } from '@mui/material';
 import EventDisplay from '@/components/Home/TeacherHomeMain/Calendar/EventDisplay/EventDisplay';
 
 import { BookingData, BookingTimeslot } from '@/modules/bookings/types';
+import { UserData } from '@/modules/user/types';
 
 type Props = {
   allBookings: BookingData[];
+  users: UserData[];
+  handleDeleteBooking: (uuid: string) => void;
 };
 
-const Calendar = ({ allBookings }: Props) => {
+const Calendar = (props: Props) => {
   const renderEventContent = (e: EventClickArg) => {
-    return <EventDisplay eventData={e} />;
+    return <EventDisplay eventData={e} users={props.users} handleDeleteBooking={props.handleDeleteBooking} />;
   };
   return (
     <Box className='h-full pt-32 px-12'>
@@ -23,7 +26,7 @@ const Calendar = ({ allBookings }: Props) => {
         plugins={[listPlugin]}
         initialView={'listWeek'}
         height={'90%'}
-        events={allBookings.map(booking => ({
+        events={props.allBookings.map(booking => ({
           ...booking,
           allDay: true,
           color:

@@ -43,28 +43,28 @@ const StudentHomeMain = ({ currentUser }: Props) => {
       return new Date(a.date).valueOf() >= new Date(b.date).valueOf() ? 1 : -1;
     });
     bookings?.sort((a, b) => {
-      return a.date !== b.date
+      return a.date === b.date
         ? a.timeslot !== b.timeslot
           ? a.timeslot === BookingTimeslot.BREAK
-            ? 1
+            ? -1
             : a.timeslot === BookingTimeslot.LUNCH && b.timeslot !== BookingTimeslot.BREAK
-            ? 1
+            ? -1
             : a.timeslot === BookingTimeslot.AFTERSCHOOL1 && b.timeslot === BookingTimeslot.AFTERSCHOOL2
-            ? 1
-            : -1
+            ? -1
+            : 1
           : 0
         : 0;
     });
     myBookings?.sort((a, b) => {
-      return a.date !== b.date
+      return a.date === b.date
         ? a.timeslot !== b.timeslot
           ? a.timeslot === BookingTimeslot.BREAK
-            ? 1
+            ? -1
             : a.timeslot === BookingTimeslot.LUNCH && b.timeslot !== BookingTimeslot.BREAK
-            ? 1
+            ? -1
             : a.timeslot === BookingTimeslot.AFTERSCHOOL1 && b.timeslot === BookingTimeslot.AFTERSCHOOL2
-            ? 1
-            : -1
+            ? -1
+            : 1
           : 0
         : 0;
     });
