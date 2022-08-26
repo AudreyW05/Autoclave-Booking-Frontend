@@ -7,16 +7,13 @@ import { Box } from '@mui/material';
 
 import EventDisplay from '@/components/Home/TeacherHomeMain/Calendar/EventDisplay/EventDisplay';
 
-import { BookingTimeslot } from '@/modules/bookings/types';
+import { BookingData, BookingTimeslot } from '@/modules/bookings/types';
 
-export const dummyBookingData = [
-  { uuid: 'asdfahsdfasdf', userId: 2, date: '2022-08-10T00:00:00+08:00', timeslot: BookingTimeslot.Break },
-  { uuid: 'afdgfgdsgfsdfg', userId: 2, date: '2022-08-11T00:00:00+08:00', timeslot: BookingTimeslot.Afterschool2 },
-  { uuid: 'afdgfgdsgfsdfg', userId: 2, date: '2022-08-11T00:00:00+08:00', timeslot: BookingTimeslot.Lunch },
-  { uuid: 'afdgfgdsgfsdfg', userId: 2, date: '2022-09-14T00:00:00+08:00', timeslot: BookingTimeslot.Afterschool1 },
-];
+type Props = {
+  allBookings: BookingData[];
+};
 
-const Calendar = () => {
+const Calendar = ({ allBookings }: Props) => {
   const renderEventContent = (e: EventClickArg) => {
     return <EventDisplay eventData={e} />;
   };
@@ -26,15 +23,15 @@ const Calendar = () => {
         plugins={[listPlugin]}
         initialView={'listWeek'}
         height={'90%'}
-        events={dummyBookingData.map(booking => ({
+        events={allBookings.map(booking => ({
           ...booking,
           allDay: true,
           color:
-            booking.timeslot === BookingTimeslot.Lunch
+            booking.timeslot === BookingTimeslot.LUNCH
               ? '#E4C249'
-              : booking.timeslot === BookingTimeslot.Afterschool1
+              : booking.timeslot === BookingTimeslot.AFTERSCHOOL1
               ? '#27C049'
-              : booking.timeslot === BookingTimeslot.Afterschool2
+              : booking.timeslot === BookingTimeslot.AFTERSCHOOL2
               ? '#A037F2'
               : '#3798F2',
         }))}

@@ -5,6 +5,8 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 type Props = {
   openAlert: boolean;
   handleAlertClose: () => void;
+  handleDeleteBooking?: (uuid: string) => void;
+  bookingDataUuid?: string;
 };
 
 const DeleteAlert = (props: Props) => {
@@ -29,6 +31,7 @@ const DeleteAlert = (props: Props) => {
           className='text-dulwichRed'
           onClick={() => {
             props.handleAlertClose();
+            props.handleDeleteBooking ? props.handleDeleteBooking(props.bookingDataUuid ?? '') : null;
           }}
           autoFocus
         >

@@ -15,7 +15,7 @@ const StudentHome = () => {
         <>
           <HomeHeader currentUser={currentUser} />
           <main>
-            <StudentHomeMain />
+            <StudentHomeMain currentUser={currentUser} />
           </main>
         </>
       )}

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import Moment from 'react-moment';
 
 import { Stack, Grid, Typography } from '@mui/material';
 
 import DeleteAlert from '@/components/Home/TeacherHomeMain/Calendar/EventDisplay/DeleteAlert/DeleteAlert';
+import { BookingData } from '@/modules/bookings/types';
 
 type Props = {
-  bookingUuid: string;
-  bookingDate: string;
-  bookingTime: string;
+  bookingData: BookingData;
+  handleDeleteBooking: (uuid: string) => void;
 };
 
 const BookingDataWrapper = (props: Props) => {
@@ -26,7 +27,9 @@ const BookingDataWrapper = (props: Props) => {
       <Stack className='px-8' spacing={0.5}>
         <Grid container>
           <Grid item className='w-3/4'>
-            <Typography className='font-semibold text-lg'>{props.bookingDate}</Typography>
+            <Moment className='font-semibold text-lg' format='dddd, MMMM D'>
+              {props.bookingData.date}
+            </Moment>
           </Grid>
           <Grid item className='w-1/4'>
             <Typography
@@ -39,9 +42,14 @@ const BookingDataWrapper = (props: Props) => {
             </Typography>
           </Grid>
         </Grid>
-        <Typography className='pl-10'>{props.bookingTime}</Typography>
+        <Typography className='pl-10'>{props.bookingData.timeslot}</Typography>
       </Stack>
-      <DeleteAlert openAlert={openAlert} handleAlertClose={handleAlertClose} />
+      <DeleteAlert
+        openAlert={openAlert}
+        handleAlertClose={handleAlertClose}
+        handleDeleteBooking={props.handleDeleteBooking}
+        bookingDataUuid={props.bookingData.uuid}
+      />
     </>
   );
 };

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 
 import { Grid, Typography, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { BookingTimeslots } from '@/modules/bookings/types';
 
 type Props = {
-  label: string;
+  timeslot: BookingTimeslots;
   available: boolean;
-  handleAddBooking: () => void;
+  date: Date;
+  handleAddBooking: (date: Date, timeslot: BookingTimeslots) => void;
   handleCloseModal: () => void;
 };
 
@@ -23,7 +25,7 @@ const BookingTimeslot = (props: Props) => {
   return (
     <Grid container className='mx-3'>
       <Grid item className='w-1/2 content-center'>
-        <Typography className='text-xl ml-2'>{props.label}</Typography>
+        <Typography className='text-xl ml-2'>{props.timeslot}</Typography>
       </Grid>
       <Grid item className='w-1/2 text-center'>
         {props.available ? (
@@ -48,14 +50,14 @@ const BookingTimeslot = (props: Props) => {
                 <DialogContentText id='alert-dialog-description'>your teacher will be notified</DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button className='text-green' onClick={handleAlertClose}>
+                <Button className='text-darkGray' onClick={handleAlertClose}>
                   Close
                 </Button>
                 <Button
                   className='text-green'
                   onClick={() => {
                     handleAlertClose();
-                    props.handleAddBooking();
+                    props.handleAddBooking(props.date, props.timeslot);
                     props.handleCloseModal();
                   }}
                   autoFocus

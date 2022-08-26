@@ -13,7 +13,7 @@ export default class BookingsService {
       const response = await ApiService.request(
         {
           baseURL: baseUrl,
-          url: this.getBookingsUrl(),
+          url: `${this.getBookingsUrl()}/getAll`,
           method: 'GET',
         },
         true,
@@ -62,7 +62,7 @@ export default class BookingsService {
       const response = await ApiService.request(
         {
           baseURL: baseUrl,
-          url: `${this.getBookingsUrl()}/`,
+          url: `${this.getBookingsUrl()}`,
           method: 'POST',
           data: {
             ...createBookingData,

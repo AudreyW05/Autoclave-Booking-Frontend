@@ -6,6 +6,14 @@ import BookingsService from '@/api/bookings/BookingsService';
 import { Button, Stack, Typography } from '@mui/material';
 import { ApiData } from '@/api/ApiService';
 import { isSuccess } from '@/api/ApiHandler';
+import { CreateBookingData } from '@/modules/bookings/types';
+import { BookingTimeslot } from '@/modules/bookings/types';
+
+const createBookingData: CreateBookingData = {
+  userId: 2,
+  date: new Date(),
+  timeslot: BookingTimeslot.LUNCH,
+};
 
 const Test = () => {
   const [loginStudent] = useApi(() => AuthService.login('student23@stu.dulwich.org', 'asdasd', 1), true, true);
@@ -13,6 +21,10 @@ const Test = () => {
   const [loginAdmin] = useApi(() => AuthService.login('admin@dulwich.org', 'asdasd', 1), true, true);
   const [getAllUsers] = useApi(() => UserService.getAllUsers(), true, true);
   const [getAllBookings] = useApi(() => BookingsService.getAllBookings(), true, true);
+  const [getOneBooking] = useApi(() => BookingsService.getBookingByUuid('0dbc8ae9-bf53'), true, true, true);
+  const [getSelf] = useApi(() => BookingsService.getSelf(2), true, true);
+  const [createBooking] = useApi(() => BookingsService.createBooking(createBookingData), true, true);
+  const [deleteBooking] = useApi(() => BookingsService.deleteBookingByUuid('b15ed398-02a2-42d7-84dc-544b25af430b'), true, true);
 
   const handleButtonClick = async (func: () => Promise<ApiData & isSuccess>) => {
     const res = await func();
@@ -54,6 +66,18 @@ const Test = () => {
           <Stack spacing={2} direction='row'>
             <Button variant='contained' onClick={() => handleButtonClick(getAllBookings)}>
               Get All Bookings
+            </Button>
+            <Button variant='contained' onClick={() => handleButtonClick(getOneBooking)}>
+              Get One Booking
+            </Button>
+            <Button variant='contained' onClick={() => handleButtonClick(getSelf)}>
+              Get Self
+            </Button>
+            <Button variant='contained' onClick={() => handleButtonClick(createBooking)}>
+              Create Booking
+            </Button>
+            <Button variant='contained' onClick={() => handleButtonClick(deleteBooking)}>
+              Delete Booking
             </Button>
           </Stack>
         </Stack>

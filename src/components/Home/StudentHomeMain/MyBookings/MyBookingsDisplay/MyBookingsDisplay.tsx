@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 
 import { Container, Stack, Typography } from '@mui/material';
+
 import BookingDataDisplay from '@/components/Home/StudentHomeMain/MyBookings/MyBookingsDisplay/MyBookingsDataWrapper/MyBookingsDataWrapper';
 
-const MyBookingsDisply = () => {
+import { BookingData } from '@/modules/bookings/types';
+
+type Props = {
+  myFutureBookings: BookingData[];
+  isLoading: boolean;
+  handleDeleteBooking: (uuid: string) => void;
+};
+
+const MyBookingsDisply = (props: Props) => {
   const [expand, setExpand] = useState<boolean>(false);
 
   const handleChangeExpand = () => {
@@ -24,7 +33,13 @@ const MyBookingsDisply = () => {
         >
           MY BOOKINGS
         </Typography>
-        {expand && <BookingDataDisplay />}
+        {expand && (
+          <BookingDataDisplay
+            myFutureBookings={props.myFutureBookings}
+            isLoading={props.isLoading}
+            handleDeleteBooking={props.handleDeleteBooking}
+          />
+        )}
       </Stack>
     </Container>
   );
