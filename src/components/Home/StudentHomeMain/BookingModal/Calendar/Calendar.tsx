@@ -23,7 +23,7 @@ const Calendar = () => {
   };
 
   const handleAddBooking = () => {
-    setMyBookings([...myBookings, { uuid: 'asdfasdf', userId: 2, time: 'BreakTime', date: date }]);
+    setMyBookings([...myBookings, { uuid: 'asdfasdf', userId: 2, timeslot: 'BreakTime', date: new Date() }]);
     console.log(date);
   };
 
