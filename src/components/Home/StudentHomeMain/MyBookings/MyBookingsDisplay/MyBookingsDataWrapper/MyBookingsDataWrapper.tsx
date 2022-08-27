@@ -4,7 +4,7 @@ import { Stack, Typography } from '@mui/material';
 
 import BookingDataWrapper from '@/components/Home/StudentHomeMain/MyBookings/MyBookingsDisplay/MyBookingsDataWrapper/BookingDataWrapper/BookingDataWrapper';
 import { BookingData } from '@/modules/bookings/types';
-import Loading from '@/components/Loading/Loading';
+import LoadingBookings from '@/components/Loading/LoadingBookings';
 
 type Props = {
   myFutureBookings: BookingData[];
@@ -16,7 +16,7 @@ const MyBookingsDataWrapper = (props: Props) => {
   return (
     <>
       {props.isLoading ? (
-        <Loading />
+        <LoadingBookings />
       ) : props.myFutureBookings.length !== 0 ? (
         <Stack className='max-h-80 overflow-auto' spacing={3}>
           {props.myFutureBookings.map(booking => (
