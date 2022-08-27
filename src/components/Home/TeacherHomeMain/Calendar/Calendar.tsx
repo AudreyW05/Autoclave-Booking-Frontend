@@ -26,6 +26,7 @@ const Calendar = (props: Props) => {
         plugins={[listPlugin]}
         initialView={'listWeek'}
         height={'90%'}
+        firstDay={0}
         events={props.allBookings.map(booking => ({
           ...booking,
           allDay: true,
