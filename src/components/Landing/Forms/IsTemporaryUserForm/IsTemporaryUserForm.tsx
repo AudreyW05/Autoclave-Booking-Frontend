@@ -3,11 +3,9 @@ import React from 'react';
 
 const IsTemporaryUserForm = () => {
   return (
-    // <LandingFormHeader
-    //   title='Temporary User'
-    //   description='You have either not set your password or not confirmed your email. Please check your email (and junk) for a link!'
-    // />
-    <div>temporary</div>
+    <div className='font-bold'>
+      You have either not set your password or not confirmed your email. Please check your email (and junk) for a link!
+    </div>
   );
 };
 

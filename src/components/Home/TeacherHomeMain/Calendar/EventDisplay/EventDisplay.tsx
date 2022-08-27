@@ -31,7 +31,7 @@ const EventDisplay = (props: Props) => {
         <Grid item className='w-full '>
           <Stack direction='row'>
             <Typography className='font-bold w-4/12 '>{props.eventData.event.extendedProps.timeslot}</Typography>
-            <Typography className='w-7/12'>{`Booked By: ${
+            <Typography className='w-7/12'>{`Booked by: ${
               props.users.find(user => user.id === props.eventData.event.extendedProps.userId)?.email
             }`}</Typography>
             <Typography className='text-dulwichRed hover:underline w-1/12' onClick={handleAlertOpen}>

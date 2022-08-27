@@ -87,7 +87,13 @@ const LoginForm = () => {
           </Stack>
         </Stack>
         <Stack className='mx-8 pt-3' spacing={2}>
-          <TextField label='Email' value={email} error={emailError} onChange={onEmailChange} />
+          <TextField
+            label='Email'
+            value={email}
+            error={emailError}
+            onChange={onEmailChange}
+            onKeyPress={e => e.key === 'Enter' && handleSignIn()}
+          />
           <FormControl sx={{ m: 1 }} variant='outlined'>
             <InputLabel htmlFor='outlined-adornment-password' error={passwordError}>
               Password
@@ -98,6 +104,7 @@ const LoginForm = () => {
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={onPasswordChange}
+              onKeyPress={e => e.key === 'Enter' && handleSignIn()}
               endAdornment={
                 <InputAdornment position='end' className='mx-2'>
                   <IconButton
