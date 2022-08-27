@@ -1,14 +1,20 @@
-export type BookingTimes = 'BreakTime' | 'Lunch Time' | 'Afterschool First Hour' | 'Afterschool Second Hour';
-export const BookingTime = {
-  Break: 'BreakTime',
-  Lunch: 'Lunch Time',
-  Afterschool1: 'Afterschool First Hour',
-  Afterschool2: 'Afterschool Second Hour',
+export type BookingTimeslots = 'BreakTime' | 'Lunch Time' | 'Afterschool First Hour' | 'Afterschool Second Hour';
+export const BookingTimeslot = {
+  BREAK: 'BreakTime' as BookingTimeslots,
+  LUNCH: 'Lunch Time' as BookingTimeslots,
+  AFTERSCHOOL1: 'Afterschool First Hour' as BookingTimeslots,
+  AFTERSCHOOL2: 'Afterschool Second Hour' as BookingTimeslots,
 };
 
 export type BookingData = {
   uuid: string;
   userId: number;
-  date: string;
-  time: BookingTimes;
+  date: Date;
+  timeslot: BookingTimeslots;
+};
+
+export type CreateBookingData = {
+  userId: number;
+  date: Date;
+  timeslot: BookingTimeslots;
 };

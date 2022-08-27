@@ -2,6 +2,8 @@ import { UserData } from '@/modules/user/types';
 import { removeLocalStorageValue, setLocalStorageValue } from '@/utilities/localStorage';
 import ApiService, { ApiData } from '@/api/ApiService';
 
+const baseUrl = process.env.REACT_APP_USERS_API_URL;
+
 interface LoginData {
   accessToken: string;
   user: UserData;
@@ -12,14 +14,11 @@ class AuthService {
     return 'authentication';
   }
 
-  private static getUserUrl() {
-    return 'users';
-  }
-
   public static async login(email: string, password: string, schoolId: number): Promise<ApiData<LoginData>> {
     try {
       //get the token
       const response = await ApiService.request({
+        baseURL: baseUrl,
         url: `${this.getAuthUrl()}/signIn`,
         method: 'POST',
         data: {

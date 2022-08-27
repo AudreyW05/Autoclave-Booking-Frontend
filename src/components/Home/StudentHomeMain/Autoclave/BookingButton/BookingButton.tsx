@@ -12,7 +12,7 @@ const BookingButton = ({ handleOpenModal }: Props) => {
       onClick={() => {
         handleOpenModal();
       }}
-      className='bg-darkGray absolute mb-[230px] z-10 h-20 w-56 rounded-3xl text-white font-bold text-xxxl hover:drop-shadow-2xl'
+      className='bg-darkGray absolute z-10 h-20 w-56 rounded-3xl text-white font-bold text-xxxl hover:drop-shadow-2xl mt-36'
     >
       BOOK
     </Button>

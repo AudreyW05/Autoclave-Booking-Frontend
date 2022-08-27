@@ -1,21 +1,32 @@
 import React from 'react';
 
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 import BookingDataWrapper from '@/components/Home/StudentHomeMain/MyBookings/MyBookingsDisplay/MyBookingsDataWrapper/BookingDataWrapper/BookingDataWrapper';
+import { BookingData } from '@/modules/bookings/types';
+import LoadingBookings from '@/components/Loading/LoadingBookings';
 
-export const dummyBookingData = [
-  { uuid: 'asdfahsdfasdf', userId: 2, date: 'Monday October 10', time: 'BreakTime' },
-  { uuid: 'afdgfgdsgfsdfg', userId: 2, date: 'Wednesday October 19', time: 'Afterschool First Hour' },
-];
+type Props = {
+  myFutureBookings: BookingData[];
+  isLoading: boolean;
+  handleDeleteBooking: (uuid: string) => void;
+};
 
-const MyBookingsDataWrapper = () => {
+const MyBookingsDataWrapper = (props: Props) => {
   return (
-    <Stack className='max-h-80 overflow-auto' spacing={3}>
-      {dummyBookingData.map(booking => (
-        <BookingDataWrapper key={booking.uuid} bookingUuid={booking.uuid} bookingDate={booking.date} bookingTime={booking.time} />
-      ))}
-    </Stack>
+    <>
+      {props.isLoading ? (
+        <LoadingBookings />
+      ) : props.myFutureBookings.length !== 0 ? (
+        <Stack className='max-h-80 overflow-auto' spacing={3}>
+          {props.myFutureBookings.map(booking => (
+            <BookingDataWrapper key={booking.uuid} bookingData={booking} handleDeleteBooking={props.handleDeleteBooking} />
+          ))}
+        </Stack>
+      ) : (
+        <Typography className='pl-6 text-lg'>You have no future bookings</Typography>
+      )}
+    </>
   );
 };
 

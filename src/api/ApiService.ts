@@ -2,8 +2,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getLocalStorageValue } from '@/utilities/localStorage';
 
-const baseUrl = process.env.REACT_APP_API_URL;
-
 // The shape of the JSON response.data from API endpoints.
 export interface ApiData<T = any> {
   data?: T;
@@ -36,7 +34,6 @@ export default class ApiService {
     try {
       const config: AxiosRequestConfig = {
         ...requestConfig,
-        baseURL: baseUrl,
         headers: {
           'x-auth-token': `${isUpdatePassword ? updatePasswordToken : accessToken}`,
           'Content-Type': contentType,
