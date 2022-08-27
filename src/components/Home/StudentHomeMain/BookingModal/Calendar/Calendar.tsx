@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { severity } from '@/consts/constants';
+
 import { Box } from '@mui/material';
 
 import FullCalendar from '@fullcalendar/react';
@@ -9,6 +12,7 @@ import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import BookingForm from '@/components/Home/StudentHomeMain/BookingModal/Calendar/BookingForm/BookingFormWrapper';
 
 import { BookingData, BookingTimeslots } from '@/modules/bookings/types';
+import { toggleShowNotification } from '@/modules/ui/uiSlice';
 
 type Props = {
   myBookings: BookingData[];
@@ -22,10 +26,14 @@ const Calendar = (props: Props) => {
 
   const currentDate = new Date();
 
+  const dispatch = useDispatch();
+
   const handleDateClick = (e: DateClickArg) => {
     if (e.date.valueOf() >= currentDate.valueOf() - 86400000) {
       setOpenBookingForm(true);
       setDate(e.date);
+    } else {
+      dispatch(toggleShowNotification({ message: 'Select a future date', severity: severity.ERROR }));
     }
   };
 
