@@ -110,7 +110,7 @@ const StudentHomeMain = ({ currentUser }: Props) => {
   };
 
   return (
-    <Grid container direction='row' className='h-screen items-center pt-4'>
+    <Grid container direction='row' className='h-screen items-center pt-4 overflow-hidden'>
       <BookingModal
         openState={openBookingModal}
         handleCloseModal={handleCloseModal}
