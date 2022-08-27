@@ -21,12 +21,12 @@ const MyBookingsDisply = (props: Props) => {
 
   return (
     <Container
-      className='rounded-[40px] hover:drop-shadow-2xl z-10 w-[500px] absolute bg-bgWhite cursor-pointer'
+      className='rounded-[40px] hover:drop-shadow-2xl z-10 w-[500px] bg-bgWhite cursor-pointer'
       style={expand ? { height: '450px' } : { height: '95px' }}
     >
       <Stack>
         <Typography
-          className='font-Inter font-extrabold text-[35px] pt-5 pb-7 text-center '
+          className='font-Inter font-extrabold text-[35px] pt-5 pb-7 text-center'
           onClick={() => {
             handleChangeExpand();
           }}
