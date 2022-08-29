@@ -11,12 +11,12 @@ import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 
 import BookingForm from '@/components/Home/StudentHomeMain/BookingModal/Calendar/BookingForm/BookingFormWrapper';
 
-import { BookingData, BookingTimeslots } from '@/modules/bookings/types';
+import { BookingData, BookingTimeslots, Supervisors } from '@/modules/bookings/types';
 import { toggleShowNotification } from '@/modules/ui/uiSlice';
 
 type Props = {
   myBookings: BookingData[];
-  handleAddBooking: (date: Date, timeslot: BookingTimeslots) => void;
+  handleAddBooking: (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors) => void;
   allBookings: BookingData[];
 };
 

@@ -7,7 +7,7 @@ import ModalWrapper from '@/components/Home/StudentHomeMain/BookingModal/ModalWr
 import Calendar from '@/components/Home/StudentHomeMain/BookingModal/Calendar/Calendar';
 import Loading from '@/components/Loading/Loading';
 
-import { BookingData, BookingTimeslots } from '@/modules/bookings/types';
+import { BookingData, BookingTimeslots, Supervisors } from '@/modules/bookings/types';
 
 const theme = createTheme({
   breakpoints: {
@@ -26,7 +26,7 @@ type Props = {
   handleCloseModal: () => void;
   myBookings: BookingData[];
   isLoading: boolean;
-  handleAddBooking: (date: Date, timeslot: BookingTimeslots) => void;
+  handleAddBooking: (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors) => void;
   allBookings: BookingData[];
 };
 

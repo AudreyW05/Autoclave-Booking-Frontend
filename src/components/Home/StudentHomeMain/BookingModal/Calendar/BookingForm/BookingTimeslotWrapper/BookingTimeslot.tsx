@@ -1,18 +1,36 @@
 import React, { useState } from 'react';
 
-import { Grid, Typography, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { BookingTimeslots } from '@/modules/bookings/types';
+import {
+  Grid,
+  Typography,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+} from '@mui/material';
+
+const { colors } = TailWindTheme.theme;
+import TailWindTheme from '@/tailwind.config';
+
+import { BookingTimeslots, Supervisor, Supervisors } from '@/modules/bookings/types';
 
 type Props = {
   timeslot: BookingTimeslots;
   available: boolean;
   date: Date;
-  handleAddBooking: (date: Date, timeslot: BookingTimeslots) => void;
+  handleAddBooking: (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors) => void;
   handleCloseModal: () => void;
 };
 
 const BookingTimeslot = (props: Props) => {
   const [openAlert, setOpenAlert] = useState<boolean>(false);
+  const [supervisor, setSupervisor] = useState<Supervisors>(Supervisor.Mr_Wilson);
 
   const handleAlertOpen = () => {
     setOpenAlert(true);
@@ -20,6 +38,16 @@ const BookingTimeslot = (props: Props) => {
 
   const handleAlertClose = () => {
     setOpenAlert(false);
+  };
+
+  const handleSupervisorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSupervisor(
+      event.target.defaultValue === Supervisor.Mr_Deshpande
+        ? Supervisor.Mr_Deshpande
+        : event.target.defaultValue === Supervisor.Mr_Williams
+        ? Supervisor.Mr_Williams
+        : Supervisor.Mr_Wilson,
+    );
   };
 
   return (
@@ -43,11 +71,66 @@ const BookingTimeslot = (props: Props) => {
               aria-labelledby='alert-dialog-title'
               aria-describedby='alert-dialog-description'
             >
-              <DialogTitle id='alert-dialog-title' className='font-bold text-center'>
+              <DialogTitle id='alert-dialog-title' className='font-bold ml-4'>
                 {'Confirm Booking?'}
               </DialogTitle>
               <DialogContent className='px-16'>
-                <DialogContentText id='alert-dialog-description'>your teacher will be notified</DialogContentText>
+                <DialogContentText id='alert-dialog-description' className='text-black pb-2'>
+                  Select your teacher supervisor:
+                </DialogContentText>
+                <FormControl>
+                  <RadioGroup
+                    className='font-Inter font-light px-2 align-center text-grayAccent'
+                    aria-labelledby='demo-radio-buttons-group-label'
+                    name='radio-buttons-group'
+                    onChange={handleSupervisorChange}
+                    defaultValue='never'
+                    value={supervisor}
+                  >
+                    <FormControlLabel
+                      value={Supervisor.Mr_Wilson}
+                      control={
+                        <Radio
+                          sx={{
+                            color: colors.black,
+                            '&.Mui-checked': {
+                              color: colors.green,
+                            },
+                          }}
+                        />
+                      }
+                      label={Supervisor.Mr_Wilson}
+                    />
+                    <FormControlLabel
+                      value={Supervisor.Mr_Deshpande}
+                      control={
+                        <Radio
+                          sx={{
+                            color: colors.black,
+                            '&.Mui-checked': {
+                              color: colors.green,
+                            },
+                          }}
+                        />
+                      }
+                      label={Supervisor.Mr_Deshpande}
+                    />
+                    <FormControlLabel
+                      value={Supervisor.Mr_Williams}
+                      control={
+                        <Radio
+                          sx={{
+                            color: colors.black,
+                            '&.Mui-checked': {
+                              color: colors.green,
+                            },
+                          }}
+                        />
+                      }
+                      label={Supervisor.Mr_Williams}
+                    />
+                  </RadioGroup>
+                </FormControl>
               </DialogContent>
               <DialogActions>
                 <Button className='text-darkGray' onClick={handleAlertClose}>
@@ -57,7 +140,7 @@ const BookingTimeslot = (props: Props) => {
                   className='text-green'
                   onClick={() => {
                     handleAlertClose();
-                    props.handleAddBooking(props.date, props.timeslot);
+                    props.handleAddBooking(props.date, props.timeslot, supervisor);
                     props.handleCloseModal();
                   }}
                   autoFocus

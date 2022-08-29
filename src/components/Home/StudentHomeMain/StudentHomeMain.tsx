@@ -5,12 +5,13 @@ import { Grid } from '@mui/material';
 import { useApi } from '@/api/ApiHandler';
 import { retrieveAllData } from '@/utilities/api';
 import BookingsService from '@/api/bookings/BookingsService';
+import UserService from '@/api/user/UserService';
 
 import AutoclaveWrapper from '@/components/Home/StudentHomeMain/Autoclave/AutoclaveWrapper';
 import MyBookingsWrapper from '@/components/Home/StudentHomeMain/MyBookings/MyBookingsWrapper';
 import BookingModal from '@/components/Home/StudentHomeMain/BookingModal/BookingModal';
 
-import { BookingData, BookingTimeslot, BookingTimeslots, CreateBookingData } from '@/modules/bookings/types';
+import { BookingData, BookingTimeslot, BookingTimeslots, CreateBookingData, Supervisors } from '@/modules/bookings/types';
 import { UserData } from '@/modules/user/types';
 
 type Props = {
@@ -23,12 +24,15 @@ const StudentHomeMain = ({ currentUser }: Props) => {
   const [allBookings, setAllBookings] = useState<BookingData[]>();
   const [myBookings, setMyBookings] = useState<BookingData[]>();
   const [myFutureBookings, setMyFutureBookings] = useState<BookingData[]>();
+  const [users, setUsers] = useState<UserData[]>();
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [getAllBookings] = useApi(() => BookingsService.getAllBookings(), false, true, false);
   const [getMyBookings] = useApi(() => BookingsService.getSelf(currentUser.id), false, true, false);
   const [createBooking] = useApi((data: CreateBookingData) => BookingsService.createBooking(data), false, true, false);
   const [deleteBooking] = useApi((data: string) => BookingsService.deleteBookingByUuid(data), false, true, false);
+  const [getAllUsers] = useApi(() => UserService.getAllUsers(), false, true, false);
 
   const fetchAllData = async () => {
     setIsLoading(true);
@@ -69,10 +73,13 @@ const StudentHomeMain = ({ currentUser }: Props) => {
         : 0;
     });
 
+    const users = await retrieveAllData<UserData[]>(getAllUsers);
+
     setAllBookings(bookings ?? []);
     setMyBookings(myBookings ?? []);
     const currentDate = new Date();
     setMyFutureBookings(myBookings?.filter(booking => new Date(booking.date).valueOf() + 1 >= currentDate.valueOf() - 86400000));
+    setUsers(users);
 
     setIsLoading(false);
   };
@@ -90,10 +97,10 @@ const StudentHomeMain = ({ currentUser }: Props) => {
     setOpenBookingModal(true);
   };
 
-  const handleAddBooking = async (date: Date, timeslot: BookingTimeslots) => {
+  const handleAddBooking = async (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors) => {
     setIsLoading(true);
 
-    const bookingData: CreateBookingData = { userId: currentUser.id, date: date, timeslot: timeslot };
+    const bookingData: CreateBookingData = { userId: currentUser.id, date: date, timeslot: timeslot, supervisor: supervisor };
     await createBooking(bookingData);
     await fetchAllData();
 
@@ -120,7 +127,13 @@ const StudentHomeMain = ({ currentUser }: Props) => {
         allBookings={allBookings ?? []}
       />
       <AutoclaveWrapper handleOpenModal={handleOpenModal} />
-      <MyBookingsWrapper myFutureBookings={myFutureBookings ?? []} isLoading={isLoading} handleDeleteBooking={handleDeleteBooking} />
+      <MyBookingsWrapper
+        myFutureBookings={myFutureBookings ?? []}
+        isLoading={isLoading}
+        handleDeleteBooking={handleDeleteBooking}
+        allBookings={allBookings ?? []}
+        users={users ?? []}
+      />
     </Grid>
   );
 };

@@ -5,7 +5,7 @@ import { ThemeProvider, createTheme, Modal, Box, Stack, Typography } from '@mui/
 import moment from 'moment';
 import BookingTimeslotWrapper from '@/components/Home/StudentHomeMain/BookingModal/Calendar/BookingForm/BookingTimeslotWrapper/BookingTimeslot';
 
-import { BookingTimeslot, BookingTimeslots, BookingData } from '@/modules/bookings/types';
+import { BookingTimeslot, BookingTimeslots, BookingData, Supervisors } from '@/modules/bookings/types';
 
 const theme = createTheme({
   breakpoints: {
@@ -22,7 +22,7 @@ const theme = createTheme({
 type Props = {
   handleCloseModal: () => void;
   date: Date;
-  handleAddBooking: (date: Date, timeslot: BookingTimeslots) => void;
+  handleAddBooking: (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors) => void;
   allBookings: BookingData[];
 };
 

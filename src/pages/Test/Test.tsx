@@ -13,6 +13,7 @@ const createBookingData: CreateBookingData = {
   userId: 2,
   date: new Date(),
   timeslot: BookingTimeslot.LUNCH,
+  supervisor: 'Mr. Williams',
 };
 
 const Test = () => {
