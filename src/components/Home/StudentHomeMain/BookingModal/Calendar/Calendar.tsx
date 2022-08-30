@@ -28,12 +28,31 @@ const Calendar = (props: Props) => {
 
   const dispatch = useDispatch();
 
+  const findSameWeek = (date: Date, newDate: Date) => {
+    const date1 = new Date(date);
+    const date2 = new Date(newDate);
+
+    if (date2.valueOf() > date1.valueOf() && date2.valueOf() < date1.valueOf() + 86400000 * (6 - date1.getDay())) {
+      return true;
+    } else if (date2.valueOf() < date1.valueOf() && date2.valueOf() > date1.valueOf() - 86400000 * date1.getDay()) {
+      return true;
+    } else if (date1.valueOf() === date2.valueOf()) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const handleDateClick = (e: DateClickArg) => {
-    if (e.date.valueOf() >= currentDate.valueOf() - 86400000) {
+    if (e.date.valueOf() < currentDate.valueOf() - 86400000) {
+      dispatch(toggleShowNotification({ message: 'Select a future date', severity: severity.ERROR }));
+    } else if (props.myBookings.filter(booking => findSameWeek(booking.date, e.date)).length >= 3) {
+      dispatch(
+        toggleShowNotification({ message: 'You have reached the maximum number of bookings for this week', severity: severity.ERROR }),
+      );
+    } else {
       setOpenBookingForm(true);
       setDate(e.date);
-    } else {
-      dispatch(toggleShowNotification({ message: 'Select a future date', severity: severity.ERROR }));
     }
   };
 
