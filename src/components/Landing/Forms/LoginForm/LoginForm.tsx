@@ -1,11 +1,28 @@
 import React, { useState } from 'react';
-import { Stack, Typography } from '@mui/material';
+
+import { useDispatch } from 'react-redux';
+import { severity } from '@/consts/constants';
+
 import { useHistory } from 'react-router';
 import AuthService from '@/api/auth/AuthService';
 import { useApi } from '@/api/ApiHandler';
-import { Card, TextField, InputAdornment, OutlinedInput, IconButton, InputLabel, FormControl, CircularProgress } from '@mui/material';
+
+import {
+  Card,
+  TextField,
+  InputAdornment,
+  OutlinedInput,
+  IconButton,
+  InputLabel,
+  FormControl,
+  CircularProgress,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
+
+import { toggleShowNotification } from '@/modules/ui/uiSlice';
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -17,6 +34,8 @@ const LoginForm = () => {
   const history = useHistory();
   const [login] = useApi(() => AuthService.login(email, password, 1), true, true, false);
 
+  const dispatch = useDispatch();
+
   const formValidation = () => {
     const isValidEmail = email.length !== 0;
     const isValidPassword = password.length !== 0;
@@ -24,6 +43,7 @@ const LoginForm = () => {
     setPasswordError(isValidPassword ? false : true);
 
     if (!isValidEmail || !isValidPassword) {
+      dispatch(toggleShowNotification({ message: 'Field cannot be empty', severity: severity.ERROR }));
       throw new Error('Form Invalid');
     }
   };
