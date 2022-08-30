@@ -22,7 +22,7 @@ const theme = createTheme({
 type Props = {
   handleCloseModal: () => void;
   date: Date;
-  handleAddBooking: (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors) => void;
+  handleAddBooking: (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors, reasoning: string) => void;
   allBookings: BookingData[];
 };
 

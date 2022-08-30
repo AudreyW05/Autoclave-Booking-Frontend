@@ -1,16 +1,17 @@
-export type BookingTimeslots = 'BreakTime' | 'Lunch Time' | 'Afterschool First Hour' | 'Afterschool Second Hour';
+export type BookingTimeslots = 'Break Time' | 'Lunch Time' | 'Afterschool First Hour' | 'Afterschool Second Hour';
 export const BookingTimeslot = {
-  BREAK: 'BreakTime' as BookingTimeslots,
+  BREAK: 'Break Time' as BookingTimeslots,
   LUNCH: 'Lunch Time' as BookingTimeslots,
   AFTERSCHOOL1: 'Afterschool First Hour' as BookingTimeslots,
   AFTERSCHOOL2: 'Afterschool Second Hour' as BookingTimeslots,
 };
 
-export type Supervisors = 'Mr. Wilson' | 'Mr. Deshpande' | 'Mr. Williams';
+export type Supervisors = 'Mr. Wilson' | 'Mr. Deshpande' | 'Mr. Williams' | 'Ms. Crowie';
 export const Supervisor = {
-  Mr_Wilson: 'Mr. Wilson' as Supervisors,
-  Mr_Deshpande: 'Mr. Deshpande' as Supervisors,
-  Mr_Williams: 'Mr. Williams' as Supervisors,
+  MR_WILSON: 'Mr. Wilson' as Supervisors,
+  MR_DESHPANDE: 'Mr. Deshpande' as Supervisors,
+  MR_WILLIAMS: 'Mr. Williams' as Supervisors,
+  MS_CROWIE: 'Ms. Crowie' as Supervisors,
 };
 
 export type BookingData = {
@@ -19,6 +20,7 @@ export type BookingData = {
   date: Date;
   timeslot: BookingTimeslots;
   supervisor: Supervisors;
+  reasoning: string;
 };
 
 export type CreateBookingData = {
@@ -26,4 +28,5 @@ export type CreateBookingData = {
   date: Date;
   timeslot: BookingTimeslots;
   supervisor: Supervisors;
+  reasoning: string;
 };

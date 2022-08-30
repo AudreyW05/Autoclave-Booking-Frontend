@@ -14,6 +14,7 @@ const createBookingData: CreateBookingData = {
   date: new Date(),
   timeslot: BookingTimeslot.LUNCH,
   supervisor: 'Mr. Williams',
+  reasoning: 'Biology IA',
 };
 
 const Test = () => {

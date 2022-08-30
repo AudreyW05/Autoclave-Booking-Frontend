@@ -26,7 +26,7 @@ type Props = {
   handleCloseModal: () => void;
   myBookings: BookingData[];
   isLoading: boolean;
-  handleAddBooking: (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors) => void;
+  handleAddBooking: (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors, reasoning: string) => void;
   allBookings: BookingData[];
 };
 
