@@ -42,7 +42,10 @@ const BookingDataWrapper = (props: Props) => {
             </Typography>
           </Grid>
         </Grid>
-        <Typography className='pl-10'>{props.bookingData.timeslot}</Typography>
+        <Stack direction='row' className='w-full'>
+          <Typography className='pl-8 w-7/12'>{props.bookingData.timeslot}</Typography>
+          <Typography className=' text-right w-5/12'>{props.bookingData.supervisor}</Typography>
+        </Stack>
       </Stack>
       <DeleteAlert
         openAlert={openAlert}

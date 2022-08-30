@@ -12,6 +12,7 @@ type Props = {
   eventData: EventClickArg;
   users: UserData[];
   handleDeleteBooking: (uuid: string) => void;
+  handleRemoveHover: (val: boolean) => void;
 };
 
 const EventDisplay = (props: Props) => {
@@ -23,6 +24,7 @@ const EventDisplay = (props: Props) => {
 
   const handleAlertClose = () => {
     setOpenAlert(false);
+    props.handleRemoveHover(false);
   };
 
   return (
@@ -34,8 +36,19 @@ const EventDisplay = (props: Props) => {
             <Typography className='w-4/12'>{`Booked by: ${props.users
               .find(user => user.id === props.eventData.event.extendedProps.userId)
               ?.email.replace('@stu.dulwich.org', '')}`}</Typography>
-            <Typography className='w-4/12'>{`Teacher Supervisor: ${props.eventData.event.extendedProps.supervisor}`}</Typography>
-            <Typography className='text-dulwichRed hover:underline w-1/12 text-center' onClick={handleAlertOpen}>
+            <Typography className='w-4/12'>{`Teacher supervisor: ${props.eventData.event.extendedProps.supervisor}`}</Typography>
+            <Typography
+              className='text-dulwichRed hover:underline w-1/12 text-center'
+              onMouseEnter={() => {
+                props.handleRemoveHover(true);
+              }}
+              onMouseLeave={() => {
+                openAlert ? null : props.handleRemoveHover(false);
+              }}
+              onClick={() => {
+                handleAlertOpen();
+              }}
+            >
               DELETE
             </Typography>
           </Stack>

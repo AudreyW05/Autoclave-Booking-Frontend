@@ -97,10 +97,16 @@ const StudentHomeMain = ({ currentUser }: Props) => {
     setOpenBookingModal(true);
   };
 
-  const handleAddBooking = async (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors) => {
+  const handleAddBooking = async (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors, reasoning: string) => {
     setIsLoading(true);
 
-    const bookingData: CreateBookingData = { userId: currentUser.id, date: date, timeslot: timeslot, supervisor: supervisor };
+    const bookingData: CreateBookingData = {
+      userId: currentUser.id,
+      date: date,
+      timeslot: timeslot,
+      supervisor: supervisor,
+      reasoning: reasoning,
+    };
     await createBooking(bookingData);
     await fetchAllData();
 

@@ -16,7 +16,7 @@ import { toggleShowNotification } from '@/modules/ui/uiSlice';
 
 type Props = {
   myBookings: BookingData[];
-  handleAddBooking: (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors) => void;
+  handleAddBooking: (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors, reasoning: string) => void;
   allBookings: BookingData[];
 };
 

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { severity } from '@/consts/constants';
+
 import {
   Grid,
   Typography,
@@ -13,24 +16,30 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Input,
 } from '@mui/material';
 
 const { colors } = TailWindTheme.theme;
 import TailWindTheme from '@/tailwind.config';
 
 import { BookingTimeslots, Supervisor, Supervisors } from '@/modules/bookings/types';
+import { toggleShowNotification } from '@/modules/ui/uiSlice';
 
 type Props = {
   timeslot: BookingTimeslots;
   available: boolean;
   date: Date;
-  handleAddBooking: (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors) => void;
+  handleAddBooking: (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors, reasoning: string) => void;
   handleCloseModal: () => void;
 };
 
 const BookingTimeslot = (props: Props) => {
   const [openAlert, setOpenAlert] = useState<boolean>(false);
-  const [supervisor, setSupervisor] = useState<Supervisors>(Supervisor.Mr_Wilson);
+  const [supervisor, setSupervisor] = useState<Supervisors>(Supervisor.MR_WILSON);
+  const [reasoning, setReasoning] = useState<string>('');
+  const [reasoningError, setReasoningError] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
 
   const handleAlertOpen = () => {
     setOpenAlert(true);
@@ -42,12 +51,19 @@ const BookingTimeslot = (props: Props) => {
 
   const handleSupervisorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSupervisor(
-      event.target.defaultValue === Supervisor.Mr_Deshpande
-        ? Supervisor.Mr_Deshpande
-        : event.target.defaultValue === Supervisor.Mr_Williams
-        ? Supervisor.Mr_Williams
-        : Supervisor.Mr_Wilson,
+      event.target.defaultValue === Supervisor.MR_DESHPANDE
+        ? Supervisor.MR_DESHPANDE
+        : event.target.defaultValue === Supervisor.MR_WILLIAMS
+        ? Supervisor.MR_WILLIAMS
+        : event.target.defaultValue === Supervisor.MR_WILSON
+        ? Supervisor.MR_WILSON
+        : Supervisor.MS_CROWIE,
     );
+  };
+
+  const handleReasoningChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    reasoningError === true ? setReasoningError(false) : null;
+    setReasoning(event.target.value);
   };
 
   return (
@@ -88,7 +104,7 @@ const BookingTimeslot = (props: Props) => {
                     value={supervisor}
                   >
                     <FormControlLabel
-                      value={Supervisor.Mr_Wilson}
+                      value={Supervisor.MR_WILSON}
                       control={
                         <Radio
                           sx={{
@@ -99,10 +115,10 @@ const BookingTimeslot = (props: Props) => {
                           }}
                         />
                       }
-                      label={Supervisor.Mr_Wilson}
+                      label={Supervisor.MR_WILSON}
                     />
                     <FormControlLabel
-                      value={Supervisor.Mr_Deshpande}
+                      value={Supervisor.MR_DESHPANDE}
                       control={
                         <Radio
                           sx={{
@@ -113,10 +129,10 @@ const BookingTimeslot = (props: Props) => {
                           }}
                         />
                       }
-                      label={Supervisor.Mr_Deshpande}
+                      label={Supervisor.MR_DESHPANDE}
                     />
                     <FormControlLabel
-                      value={Supervisor.Mr_Williams}
+                      value={Supervisor.MR_WILLIAMS}
                       control={
                         <Radio
                           sx={{
@@ -127,10 +143,31 @@ const BookingTimeslot = (props: Props) => {
                           }}
                         />
                       }
-                      label={Supervisor.Mr_Williams}
+                      label={Supervisor.MR_WILLIAMS}
+                    />
+                    <FormControlLabel
+                      value={Supervisor.MS_CROWIE}
+                      control={
+                        <Radio
+                          sx={{
+                            color: colors.black,
+                            '&.Mui-checked': {
+                              color: colors.green,
+                            },
+                          }}
+                        />
+                      }
+                      label={Supervisor.MS_CROWIE}
                     />
                   </RadioGroup>
                 </FormControl>
+                <Input
+                  placeholder={'Please enter the reasoning for your booking'}
+                  value={reasoning}
+                  className='w-full color-bgWhite font-Inter font-light px-0 pt-2'
+                  onChange={handleReasoningChange}
+                  error={reasoningError}
+                />
               </DialogContent>
               <DialogActions>
                 <Button className='text-darkGray' onClick={handleAlertClose}>
@@ -139,9 +176,14 @@ const BookingTimeslot = (props: Props) => {
                 <Button
                   className='text-green'
                   onClick={() => {
-                    handleAlertClose();
-                    props.handleAddBooking(props.date, props.timeslot, supervisor);
-                    props.handleCloseModal();
+                    if (reasoning.trim().length === 0) {
+                      setReasoningError(true);
+                      dispatch(toggleShowNotification({ message: 'Reasoning cannot be empty', severity: severity.ERROR }));
+                    } else {
+                      handleAlertClose();
+                      props.handleAddBooking(props.date, props.timeslot, supervisor, reasoning);
+                      props.handleCloseModal();
+                    }
                   }}
                   autoFocus
                 >
