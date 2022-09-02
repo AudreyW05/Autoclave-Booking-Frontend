@@ -2,7 +2,7 @@ import React from 'react';
 
 import moment from 'moment';
 
-import { Modal, createTheme, Stack, ThemeProvider, Box, Input, Typography } from '@mui/material';
+import { Modal, createTheme, Stack, ThemeProvider, Box, Typography } from '@mui/material';
 
 import { BookingData } from '@/modules/bookings/types';
 import { UserData } from '@/modules/user/types';
