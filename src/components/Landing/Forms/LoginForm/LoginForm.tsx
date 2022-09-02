@@ -7,6 +7,8 @@ import { useHistory } from 'react-router';
 import AuthService from '@/api/auth/AuthService';
 import { useApi } from '@/api/ApiHandler';
 
+import { NavLink } from 'react-router-dom';
+
 import {
   Card,
   TextField,
@@ -102,8 +104,16 @@ const LoginForm = () => {
         <Stack className='font-Inter' spacing={-1}>
           <Typography className='text-[52px]'>Welcome Back</Typography>
           <Stack direction='row' spacing={1}>
-            <Typography className='text-[16px]'>Need to make an account?</Typography>
-            <Typography className='font-Inter text-[16px] text-dulwichRed text-center hover:underline'>Sign Up</Typography>
+            <Typography className='text-[16px]'>
+              Need to make an account?{' '}
+              <NavLink
+                to={{ pathname: 'https://dulwich-bookings.netlify.app/auth/signUp' }}
+                target='_blank'
+                className='text-dulwichRed hover:underline underline-offset-4'
+              >
+                Sign Up
+              </NavLink>
+            </Typography>
           </Stack>
         </Stack>
         <Stack className='mx-8 pt-3' spacing={2}>
@@ -140,7 +150,13 @@ const LoginForm = () => {
               label='Password'
             />
           </FormControl>
-          <Typography className='font-Inter text-[16px] text-dulwichRed text-center hover:underline'>Forgot Password?</Typography>
+          <NavLink
+            to={{ pathname: 'https://dulwich-bookings.netlify.app/auth/forgetPassword' }}
+            target='_blank'
+            className='text-dulwichRed hover:underline underline-offset-4'
+          >
+            Forgot Password?
+          </NavLink>
         </Stack>
         <div className='float-right'>
           <LoadingButton
