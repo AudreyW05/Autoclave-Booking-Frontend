@@ -20,6 +20,7 @@ import {
   CircularProgress,
   Stack,
   Typography,
+  Grid,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -150,13 +151,17 @@ const LoginForm = () => {
               label='Password'
             />
           </FormControl>
-          <NavLink
-            to={{ pathname: 'https://dulwich-bookings.netlify.app/auth/forgetPassword' }}
-            target='_blank'
-            className='text-dulwichRed hover:underline underline-offset-4'
-          >
-            Forgot Password?
-          </NavLink>
+          <Grid container className='w-full justify-center'>
+            <Grid item>
+              <NavLink
+                to={{ pathname: 'https://dulwich-bookings.netlify.app/auth/forgetPassword' }}
+                target='_blank'
+                className='text-dulwichRed hover:underline underline-offset-4'
+              >
+                Forgot Password?
+              </NavLink>
+            </Grid>
+          </Grid>
         </Stack>
         <div className='float-right'>
           <LoadingButton
