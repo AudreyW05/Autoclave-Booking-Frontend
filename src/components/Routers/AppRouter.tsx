@@ -25,15 +25,12 @@ const AppRouter = () => {
   const currentUser = useSelector(getCurrentUser);
   const isUserTeacher = isTeacher(currentUser);
   const isTemp = !currentUser?.isConfirmed && currentUser?.isTemporary;
-  // console.log(isTemp);
 
-  const fetchUser = async () => {
+  const fetchSelf = async () => {
     try {
       const res = await getSelf();
-      if (res.isSuccess) {
-        dispatch(updateCurrentUser(res.data));
-        console.log(res.data);
-      }
+      if (!res.isSuccess) return;
+      dispatch(updateCurrentUser(res.data));
     } catch (err) {
       console.log(err);
     }
@@ -41,8 +38,8 @@ const AppRouter = () => {
 
   useEffect(() => {
     if (!accessToken) return;
-    fetchUser();
-  }, []);
+    fetchSelf();
+  }, [accessToken]);
 
   return (
     <Switch>
