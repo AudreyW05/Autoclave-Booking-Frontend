@@ -12,7 +12,7 @@ import AutoclaveWrapper from '@/components/Home/StudentHomeMain/Autoclave/Autocl
 import MyBookingsWrapper from '@/components/Home/StudentHomeMain/MyBookings/MyBookingsWrapper';
 import BookingModal from '@/components/Home/StudentHomeMain/BookingModal/BookingModal';
 
-import { BookingData, BookingTimeslot, BookingTimeslots, CreateBookingData, Supervisors } from '@/modules/bookings/types';
+import { BookingData, BookingTimeslot, BookingTimeslots, CreateBookingData, Supervisor, Supervisors } from '@/modules/bookings/types';
 import { UserData } from '@/modules/user/types';
 import { EmailMessage } from '@/modules/email/types';
 
@@ -114,14 +114,23 @@ const StudentHomeMain = ({ currentUser }: Props) => {
     };
     await createBooking(bookingData);
     await fetchAllData();
-    await sendEmail('audrey.wong23@stu.dulwich.org', date, timeslot, supervisor, reasoning);
+    await sendEmail(date, timeslot, supervisor, reasoning);
 
     setIsLoading(false);
   };
 
-  const sendEmail = async (email: string, date: Date, timeslot: BookingTimeslots, supervisor: Supervisors, reasoning: string) => {
+  const sendEmail = async (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors, reasoning: string) => {
+    const supervisorEmail =
+      supervisor === Supervisor.MR_WILSON
+        ? 'jason.l.wilson@dulwich.org'
+        : supervisor === Supervisor.MR_DESHPANDE
+        ? 'adam.deshpande@dulwich.org'
+        : supervisor === Supervisor.MR_WILLIAMS
+        ? 'dominic.williams@dulwich.org'
+        : 'michelle.crowie@dulwich.org';
+
     await sendMail({
-      to: email,
+      to: supervisorEmail,
       from: 'autoclave-booking@outlook.com',
       subject: 'New Autoclave Booking',
       html: `<b>Booking by ${users?.find(user => user.id === currentUser.id)?.email.replace('@stu.dulwich.org', '')}</b><p>Date: ${moment(
