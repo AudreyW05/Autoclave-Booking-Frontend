@@ -47,7 +47,7 @@ const BookingForm = (props: Props) => {
                 available={
                   props.allBookings.filter(
                     booking => booking.timeslot === BookingTimeslot.BREAK && new Date(booking.date).valueOf() === props.date.valueOf(),
-                  ).length < 2
+                  ).length < 3
                 }
                 date={props.date}
                 handleAddBooking={props.handleAddBooking}
@@ -58,7 +58,7 @@ const BookingForm = (props: Props) => {
                 available={
                   props.allBookings.filter(
                     booking => booking.timeslot === BookingTimeslot.LUNCH && new Date(booking.date).valueOf() === props.date.valueOf(),
-                  ).length < 2
+                  ).length < 3
                 }
                 date={props.date}
                 handleAddBooking={props.handleAddBooking}
@@ -70,7 +70,7 @@ const BookingForm = (props: Props) => {
                   props.allBookings.filter(
                     booking =>
                       booking.timeslot === BookingTimeslot.AFTERSCHOOL1 && new Date(booking.date).valueOf() === props.date.valueOf(),
-                  ).length < 2
+                  ).length < 3
                 }
                 date={props.date}
                 handleAddBooking={props.handleAddBooking}
@@ -82,7 +82,7 @@ const BookingForm = (props: Props) => {
                   props.allBookings.filter(
                     booking =>
                       booking.timeslot === BookingTimeslot.AFTERSCHOOL2 && new Date(booking.date).valueOf() === props.date.valueOf(),
-                  ).length < 2
+                  ).length < 3
                 }
                 date={props.date}
                 handleAddBooking={props.handleAddBooking}
