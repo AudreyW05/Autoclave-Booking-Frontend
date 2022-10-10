@@ -6,6 +6,7 @@ import { useApi } from '@/api/ApiHandler';
 import { retrieveAllData } from '@/utilities/api';
 import BookingsService from '@/api/bookings/BookingsService';
 import UserService from '@/api/user/UserService';
+import EmailService from '@/api/email/EmailService';
 
 import AutoclaveWrapper from '@/components/Home/StudentHomeMain/Autoclave/AutoclaveWrapper';
 import MyBookingsWrapper from '@/components/Home/StudentHomeMain/MyBookings/MyBookingsWrapper';
@@ -13,6 +14,9 @@ import BookingModal from '@/components/Home/StudentHomeMain/BookingModal/Booking
 
 import { BookingData, BookingTimeslot, BookingTimeslots, CreateBookingData, Supervisors } from '@/modules/bookings/types';
 import { UserData } from '@/modules/user/types';
+import { EmailMessage } from '@/modules/email/types';
+
+import moment from 'moment';
 
 type Props = {
   currentUser: UserData;
@@ -32,6 +36,7 @@ const StudentHomeMain = ({ currentUser }: Props) => {
   const [getMyBookings] = useApi(() => BookingsService.getSelf(currentUser.id), false, true, false);
   const [createBooking] = useApi((data: CreateBookingData) => BookingsService.createBooking(data), false, true, false);
   const [deleteBooking] = useApi((data: string) => BookingsService.deleteBookingByUuid(data), false, true, false);
+  const [sendMail] = useApi((msg: EmailMessage) => EmailService.sendMail(msg), false, true, false);
   const [getAllUsers] = useApi(() => UserService.getAllUsers(), false, true, false);
 
   const fetchAllData = async () => {
@@ -109,8 +114,22 @@ const StudentHomeMain = ({ currentUser }: Props) => {
     };
     await createBooking(bookingData);
     await fetchAllData();
+    await sendEmail('audrey.wong23@stu.dulwich.org', date, timeslot, supervisor, reasoning);
 
     setIsLoading(false);
+  };
+
+  const sendEmail = async (email: string, date: Date, timeslot: BookingTimeslots, supervisor: Supervisors, reasoning: string) => {
+    await sendMail({
+      to: email,
+      from: 'autoclave-booking@outlook.com',
+      subject: 'New Autoclave Booking',
+      html: `<b>Booking by ${users?.find(user => user.id === currentUser.id)?.email.replace('@stu.dulwich.org', '')}</b><p>Date: ${moment(
+        date,
+      ).format(
+        'dddd MMMM D',
+      )}</p><p>Timeslot: ${timeslot}</p><p>Teacher Supervisor: ${supervisor}</p><p>Reason For Booking: ${reasoning}</p>`,
+    });
   };
 
   const handleDeleteBooking = async (uuid: string) => {
