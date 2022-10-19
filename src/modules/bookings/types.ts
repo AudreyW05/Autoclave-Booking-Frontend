@@ -1,5 +1,6 @@
-export type BookingTimeslots = 'Break Time' | 'Lunch Time' | 'Afterschool First Hour' | 'Afterschool Second Hour';
+export type BookingTimeslots = 'Form Time' | 'Break Time' | 'Lunch Time' | 'Afterschool First Hour' | 'Afterschool Second Hour';
 export const BookingTimeslot = {
+  FORM: 'Form Time' as BookingTimeslots,
   BREAK: 'Break Time' as BookingTimeslots,
   LUNCH: 'Lunch Time' as BookingTimeslots,
   AFTERSCHOOL1: 'Afterschool First Hour' as BookingTimeslots,

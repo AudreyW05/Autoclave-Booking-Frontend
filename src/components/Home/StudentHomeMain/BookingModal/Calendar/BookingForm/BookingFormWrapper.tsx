@@ -36,12 +36,23 @@ const BookingForm = (props: Props) => {
         BackdropProps={{ style: { backgroundColor: 'transparent' } }}
         disableAutoFocus
       >
-        <Box className='rounded-3xl w-[500px] h-96 pr-1 pl-6 pt-4 pb-6 bg-bgWhite shadow-[0_4px_20px_0px_rgba(0,0,0,0.25)] ring-0'>
+        <Box className='rounded-3xl w-[500px] h-102 pr-1 pl-6 pt-4 pb-8 bg-bgWhite shadow-[0_4px_20px_0px_rgba(0,0,0,0.25)] ring-0'>
           <Stack spacing={3}>
             <Typography className='pt-4 text-center text-[35px] font-Inter font-bold'>
               {moment(props.date).format('dddd MMMM D')}
             </Typography>
             <Stack spacing={4}>
+              <BookingTimeslotWrapper
+                timeslot={BookingTimeslot.FORM}
+                available={
+                  props.allBookings.filter(
+                    booking => booking.timeslot === BookingTimeslot.FORM && new Date(booking.date).valueOf() === props.date.valueOf(),
+                  ).length < 3
+                }
+                date={props.date}
+                handleAddBooking={props.handleAddBooking}
+                handleCloseModal={props.handleCloseModal}
+              />
               <BookingTimeslotWrapper
                 timeslot={BookingTimeslot.BREAK}
                 available={

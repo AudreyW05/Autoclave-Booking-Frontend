@@ -36,7 +36,9 @@ const AllBookingsCalendar = (props: Props) => {
               ? '#27C049'
               : booking.timeslot === BookingTimeslot.AFTERSCHOOL2
               ? '#A037F2'
-              : '#3798F2',
+              : booking.timeslot === BookingTimeslot.BREAK
+              ? '#3798F2'
+              : '#F48B1B',
         }))}
         noEventsContent={'No bookings this week'}
         eventContent={renderEventContent}

@@ -54,9 +54,11 @@ const StudentHomeMain = ({ currentUser }: Props) => {
     bookings?.sort((a, b) => {
       return a.date === b.date
         ? a.timeslot !== b.timeslot
-          ? a.timeslot === BookingTimeslot.BREAK
+          ? a.timeslot === BookingTimeslot.FORM
             ? -1
-            : a.timeslot === BookingTimeslot.LUNCH && b.timeslot !== BookingTimeslot.BREAK
+            : a.timeslot === BookingTimeslot.BREAK && b.timeslot !== BookingTimeslot.FORM
+            ? -1
+            : a.timeslot === BookingTimeslot.LUNCH && b.timeslot !== BookingTimeslot.FORM && b.timeslot !== BookingTimeslot.BREAK
             ? -1
             : a.timeslot === BookingTimeslot.AFTERSCHOOL1 && b.timeslot === BookingTimeslot.AFTERSCHOOL2
             ? -1
@@ -67,9 +69,11 @@ const StudentHomeMain = ({ currentUser }: Props) => {
     myBookings?.sort((a, b) => {
       return a.date === b.date
         ? a.timeslot !== b.timeslot
-          ? a.timeslot === BookingTimeslot.BREAK
+          ? a.timeslot === BookingTimeslot.FORM
             ? -1
-            : a.timeslot === BookingTimeslot.LUNCH && b.timeslot !== BookingTimeslot.BREAK
+            : a.timeslot === BookingTimeslot.BREAK && b.timeslot !== BookingTimeslot.FORM
+            ? -1
+            : a.timeslot === BookingTimeslot.LUNCH && b.timeslot !== BookingTimeslot.FORM && b.timeslot !== BookingTimeslot.BREAK
             ? -1
             : a.timeslot === BookingTimeslot.AFTERSCHOOL1 && b.timeslot === BookingTimeslot.AFTERSCHOOL2
             ? -1
