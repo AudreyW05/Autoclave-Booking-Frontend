@@ -124,14 +124,15 @@ const StudentHomeMain = ({ currentUser }: Props) => {
   };
 
   const sendEmail = async (date: Date, timeslot: BookingTimeslots, supervisor: Supervisors, reasoning: string) => {
-    const supervisorEmail =
-      supervisor === Supervisor.MR_WILSON
-        ? 'jason.l.wilson@dulwich.org'
-        : supervisor === Supervisor.MR_DESHPANDE
-        ? 'adam.deshpande@dulwich.org'
-        : supervisor === Supervisor.MR_WILLIAMS
-        ? 'dominic.williams@dulwich.org'
-        : 'michelle.crowie@dulwich.org';
+    // const supervisorEmail =
+    //   supervisor === Supervisor.MR_WILSON
+    //     ? 'jason.l.wilson@dulwich.org'
+    //     : supervisor === Supervisor.MR_DESHPANDE
+    //     ? 'adam.deshpande@dulwich.org'
+    //     : supervisor === Supervisor.MR_WILLIAMS
+    //     ? 'dominic.williams@dulwich.org'
+    //     : 'michelle.crowie@dulwich.org';
+    const supervisorEmail = 'audrey.wong23@stu.dulwich.org';
 
     await sendMail({
       to: supervisorEmail,
