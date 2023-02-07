@@ -12,7 +12,7 @@ import AutoclaveWrapper from '@/components/Home/StudentHomeMain/Autoclave/Autocl
 import MyBookingsWrapper from '@/components/Home/StudentHomeMain/MyBookings/MyBookingsWrapper';
 import BookingModal from '@/components/Home/StudentHomeMain/BookingModal/BookingModal';
 
-import { BookingData, BookingTimeslot, BookingTimeslots, CreateBookingData, Supervisor, Supervisors } from '@/modules/bookings/types';
+import { BookingData, BookingTimeslot, BookingTimeslots, CreateBookingData, Supervisors } from '@/modules/bookings/types';
 import { UserData } from '@/modules/user/types';
 import { EmailMessage } from '@/modules/email/types';
 
